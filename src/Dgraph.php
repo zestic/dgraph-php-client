@@ -3,27 +3,21 @@
 namespace Linicode\DgraphPHP;
 
 use Api\Check;
+use Api\DgraphClient;
 use Api\LinRead;
-use Api\Mutation;
 use Api\Operation;
+use SyncMutex;
 
-class Dgraph
+final class Dgraph
 {
+    /** @var \Api\DgraphClient[] */
+    private $clients;
 
-    /**
-     * @var \Api\DgraphClient[]
-     */
-    public $dc;
+    /** @var SyncMutex */
+    private $mutex;
 
-    /**
-     * @var \SyncMutex
-     */
-    public $mu;
-
-    /**
-     * @var \Api\LinRead
-     */
-    public $linRead;
+    /** @var \Api\LinRead */
+    private $linRead;
 
     /**
      * creates a new Dgraph for interacting with the Dgraph store connected to
@@ -36,29 +30,24 @@ class Dgraph
      */
     public function __construct(array $clients)
     {
-        $this->dc = $clients;
-        $this->mu = new \SyncMutex();
+        $this->clients = $clients;
+        $this->mutex = new SyncMutex();
         $this->linRead = new LinRead();
     }
 
-    /**
-     * @param \Api\LinRead $src
-     */
     public function mergeLinRead(LinRead $src)
     {
-        $this->mu->lock();
+        $this->mutex->lock();
         Y::mergeLinReads($this->linRead, $src);
-        $this->mu->unlock();
+        $this->mutex->unlock();
     }
 
-    /**
-     * @return \Api\LinRead
-     */
-    public function getLinRead()
+    public function getLinRead(): LinRead
     {
-        $this->mu->lock();
+        $this->mutex->lock();
         $linRead = clone $this->linRead;
-        $this->mu->unlock();
+        $this->mutex->unlock();
+
         return $linRead;
     }
 
@@ -75,6 +64,7 @@ class Dgraph
     {
         $anyClient = $this->anyClient();
         $alterCall = $anyClient->Alter($argument, $metadata, $options);
+
         return Y::handleResponse($alterCall);
     }
 
@@ -91,15 +81,17 @@ class Dgraph
     {
         $anyClient = $this->anyClient();
         $checkVersionCall = $anyClient->CheckVersion($argument, $metadata, $options);
+
         return Y::handleResponse($checkVersionCall);
     }
 
-    /**
-     * @return \Api\DgraphClient
-     */
-    public function anyClient()
+    public function anyClient(): DgraphClient
     {
-        return $this->dc[array_rand($this->dc)];
+        return $this->clients[array_rand($this->clients)];
     }
 
+    public function getTxn(): Txn
+    {
+        return new Txn($this);
+    }
 }
