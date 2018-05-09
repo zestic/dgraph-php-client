@@ -1,6 +1,6 @@
 <?php
 
-namespace Linicode\DgraphPHP;
+namespace Zestic\DgraphPHP;
 
 use Api\Mutation;
 use Api\Request;
@@ -38,11 +38,11 @@ class Txn
     private $mutated;
 
     /**
-     * @var \Linicode\DgraphPHP\Dgraph
+     * @var \Zestic\DgraphPHP\Dgraph
      */
     private $dg;
 
-    public function __construct(\Linicode\DgraphPHP\Dgraph $dg)
+    public function __construct(\Zestic\DgraphPHP\Dgraph $dg)
     {
         $this->dg = $dg;
         $this->context = new TxnContext();

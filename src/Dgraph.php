@@ -1,6 +1,6 @@
 <?php
 
-namespace Linicode\DgraphPHP;
+namespace Zestic\DgraphPHP;
 
 use Api\Check;
 use Api\DgraphClient;
@@ -58,7 +58,7 @@ final class Dgraph
      *
      * @return \Api\Payload
      *
-     * @throws \Linicode\DgraphPHP\CallException
+     * @throws \Zestic\DgraphPHP\CallException
      */
     public function alter(Operation $argument, $metadata = [], $options = [])
     {
@@ -75,7 +75,7 @@ final class Dgraph
      *
      * @return \Api\Version
      *
-     * @throws \Linicode\DgraphPHP\CallException
+     * @throws \Zestic\DgraphPHP\CallException
      */
     public function checkVersion(Check $argument, $metadata = [], $options = [])
     {

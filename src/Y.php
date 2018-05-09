@@ -1,6 +1,6 @@
 <?php
 
-namespace Linicode\DgraphPHP;
+namespace Zestic\DgraphPHP;
 
 use Api\LinRead;
 use Grpc\UnaryCall;
@@ -36,7 +36,7 @@ class Y
      *
      * @return mixed
      *
-     * @throws \Linicode\DgraphPHP\CallException
+     * @throws \Zestic\DgraphPHP\CallException
      */
     public static function handleResponse(UnaryCall $call)
     {

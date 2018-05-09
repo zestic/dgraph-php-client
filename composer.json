@@ -16,7 +16,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Linicode\\DgraphPHP\\": "src/",
+            "Zestic\\DgraphPHP\\": "src/",
             "GPBMetadata\\": "src/GPBMetadata",
             "Api\\": "src/Api"
         }
