@@ -1,6 +1,6 @@
 <?php
 
-namespace Linicode\DgraphPHP;
+namespace Zestic\DgraphPHP;
 
 use RuntimeException;
 
