@@ -67,7 +67,7 @@ To set the schema, create an instance of `Operation` and use the `Alter` endpoin
 ```php
 $schema = "name: string @index(exact) .";
 $operation = new Operation();
-$operation->setSchea($schema);
+$operation->setSchema($schema);
 
 $dgraph->alter($operation);
 
