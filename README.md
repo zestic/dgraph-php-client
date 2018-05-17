@@ -118,6 +118,8 @@ $mutation = (new Mutation())
     ->setSetJson($person);
 
 $txn->mutate($mutation);
+
+$txn->commit();
 ```
 
 Sometimes, you only want to commit mutation, without querying anything further.
